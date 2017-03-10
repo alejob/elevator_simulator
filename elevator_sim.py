@@ -1,5 +1,7 @@
 import numpy as np
+import time
 
+array_elevators = [1,2,3]
 
 class Building:
     def __init__(self, floors, inhabitants_per_floor, elevators):
@@ -21,7 +23,7 @@ class Building:
             living_floor = current_floor # init where person lives
             for inhabitant in range(self.inhabitants_per_floor):
                 #with the last "self" I call Building Class and set to the inhabitant
-                self.array_inhabitants.append(Person(800, 1700, current_floor+1, 0, living_floor, self))
+                self.array_inhabitants.append(Person(800, 1700, current_floor+1, 0, living_floor+1, self))
         
 
     def set_elevators(self,capacity = 10, velocity = 1, current_floor = 1):
@@ -47,26 +49,7 @@ class Elevator:
             self.current_floor -= 1
         else:
             return 0
-
-    #def sensor(calling_floor, current_floor = self.current_floor,position_others_elevators):
-    #def sensor(self, calling_floor, current_floor = 0):
-    def sensor(self, calling_floor):
-        #current_floor = self.current_floor
-        self.calling_floor = calling_floor
-        #maybe this should be learned automatically
-        """
-        if call > current_floor:
-            go up
-        elif call < current_floor:
-            go down
-        elif call == current_floor:
-            keep on floor
-        #black box and ...
-        
-        return(direction)
-        """
-        return calling_floor
-
+    
 
 class Person:
     def __init__(self, time_leave, time_arrive, current_floor, destination_floor, living_floor, current_building):
@@ -88,15 +71,25 @@ class Person:
 
 
 class Brain:
-    #def __init__(self,buildingg):
-    #    self.buildingg = buildingg
-        
+    def __init__(self):
+        #self.buildingg = buildingg
+        self.time_start = time.time() 
+        self.time_end = None
+   
     def calling_elevator(self, calling_floor, direction):
         print "Brain: orden recibida, llamado desde el piso", calling_floor
+        elevators_current_floor = self.get_elevators_current_floor()
         return 0
     
     def destination_floor(self, destination_floor):
         print "Brain: orden recibida, ir al piso", destination_floor
         return 0
     
-    
+    def arrived(self):
+        self.time_end = time.time()
+        return self.time_end
+        
+    def get_elevators_current_floor(self):
+        for i in range(len(array_elevators)):
+            #building.array_elevators[i].current_floor
+            print "hola"

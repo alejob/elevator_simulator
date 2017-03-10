@@ -41,7 +41,7 @@ print building.array_inhabitants[134].call_elevator("down")
 print building.array_inhabitants[134].set_elevator(0)
 
 
-for i in range(1000):
+for i in range(10000):
     select_inhab = np.random.randint(len(building.array_inhabitants))
     print select_inhab
     if building.array_inhabitants[select_inhab].current_floor == 0:
@@ -54,4 +54,8 @@ for i in range(1000):
         building.array_inhabitants[select_inhab].set_elevator(0)
         building.array_inhabitants[select_inhab].current_floor = 0
         
+    print "total time ", building.brain.arrived()-building.brain.time_start
     print "current floor", building.array_inhabitants[select_inhab].current_floor
+
+
+print "brain.piso: ", building.brain.get_elevators_current_floor()
