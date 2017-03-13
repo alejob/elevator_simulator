@@ -1,17 +1,16 @@
 import numpy as np
 import time
 
-array_elevators = [1,2,3]
 
 class Building:
     def __init__(self, floors, inhabitants_per_floor, elevators):
-        #floors doesn't include level 0, ex: floor = 10, mean 10 floor + level 0
+        #floors doesn't include level 0, ex: floor = 10 means 10 floor + level 0
         self.floors = floors
         self.inhabitants_per_floor = inhabitants_per_floor
         self.elevators = elevators
         self.total_inhabitants = inhabitants_per_floor * floors
         #Create a building with a brain
-        self.brain = Brain()
+        self.brain = Brain(self)
         #init defaults elevators
         self.array_elevators = []
         for elevator in range(self.elevators):
@@ -71,25 +70,43 @@ class Person:
 
 
 class Brain:
-    def __init__(self):
-        #self.buildingg = buildingg
+    def __init__(self, building):
+        self.building = building
         self.time_start = time.time() 
         self.time_end = None
+        self.destination = []
+        self.calling = []
+        self.elevators_current_floors = []
    
     def calling_elevator(self, calling_floor, direction):
         print "Brain: orden recibida, llamado desde el piso", calling_floor
-        elevators_current_floor = self.get_elevators_current_floor()
-        return 0
+        #elevators_current_floor = self.get_elevators_current_floor()
+        return self.calling.append(calling_floor) 
     
     def destination_floor(self, destination_floor):
         print "Brain: orden recibida, ir al piso", destination_floor
-        return 0
+        return self.destination.append(destination_floor)
     
     def arrived(self):
         self.time_end = time.time()
         return self.time_end
         
     def get_elevators_current_floor(self):
-        for i in range(len(array_elevators)):
-            #building.array_elevators[i].current_floor
-            print "hola"
+        self.elevators_current_floors = []
+        for i in range(len(self.building.array_elevators)):
+            print "###################"
+            print "elevator ",i
+            print "current floor:",self.building.array_elevators[i].current_floor
+            self.elevators_current_floors.append(self.building.array_elevators[i].current_floor)
+        return self.elevators_current_floors
+
+    #this function should be trained with RL
+    def move_elevators(self):
+        current_floors = self.get_elevators_current_floor()
+        destination_floor = self.destination
+
+        #return direction of each elevator [up, down, none, down]
+        #maybe not return, just void
+        self.building.array_elevators[1].move("up")
+        self.building.array_elevators[1].move("up")
+        return 0
