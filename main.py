@@ -5,7 +5,6 @@ import numpy as np
 #initialize building
 building = Building(10, 20, 4)
 
-
 #print building.create_elevators()
 
 """
